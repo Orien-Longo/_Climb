@@ -124,8 +124,9 @@ public class CustomIK : MonoBehaviour
         upperArmAxisCorrection.transform.LookAt(forearm.position, upperArm.up);
         upperArm.parent = upperArmAxisCorrection.transform;
 
-        forearmAxisCorrection.transform.parent = forearm;
-        forearmAxisCorrection.transform.LookAt(forearm.position, forearm.up);
+        //forearmAxisCorrection.transform.parent = forearm;
+        forearmAxisCorrection.transform.position = forearm.position;
+        forearmAxisCorrection.transform.LookAt(hand.position, forearm.up);
         forearm.parent = forearmAxisCorrection.transform;
 
         handAxisCorrection.transform.parent = hand;
@@ -135,7 +136,7 @@ public class CustomIK : MonoBehaviour
         elbowTarget.position = elbowTargetPosition;
 
         upperArmAxisCorrection.transform.LookAt(target, elbowTarget.position - upperArmAxisCorrection.transform.position);
-        upperArmAxisCorrection.transform.localRotation = Quaternion.Euler(upperArmAxisCorrection.transform.localRotation.eulerAngles - new Vector3 (ikAngle,0,0));
+        upperArmAxisCorrection.transform.localRotation = Quaternion.Euler(upperArmAxisCorrection.transform.localRotation.eulerAngles - new Vector3(ikAngle, 0, 0));
         forearmAxisCorrection.transform.LookAt(target, elbowTarget.position - upperArmAxisCorrection.transform.position);
         handAxisCorrection.transform.rotation = target.rotation;
 

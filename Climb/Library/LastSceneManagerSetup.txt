@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/HandholdFinder.unity
+- path: Assets/Body Test/BodyTest.unity
   isLoaded: 1
   isActive: 1
