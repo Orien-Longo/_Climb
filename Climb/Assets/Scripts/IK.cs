@@ -46,6 +46,20 @@ public class IK : MonoBehaviour {
 		avatar = GetComponent<Animator>();
 	}
 
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire2")){
+            if (!ikActive)
+            {
+                ikActive = true;
+            }
+            else
+            {
+                ikActive = false;
+            }
+        }
+    }
+
 	void OnGUI()
 	{
 
@@ -100,7 +114,8 @@ public class IK : MonoBehaviour {
 			
 				if(rightHandObj != null)
 				{
-					avatar.SetIKPosition(AvatarIKGoal.RightHand,rightHandObj.position);
+                    //rightHandObj.rotation =  Quaternion.Inverse(Quaternion.Euler( new Vector3(rightHandObj.rotation.x + 180,rightHandObj.rotation.y + 180, rightHandObj.rotation.z+180)));
+                    avatar.SetIKPosition(AvatarIKGoal.RightHand,rightHandObj.position);
 					avatar.SetIKRotation(AvatarIKGoal.RightHand,rightHandObj.rotation);
 				}				
 				

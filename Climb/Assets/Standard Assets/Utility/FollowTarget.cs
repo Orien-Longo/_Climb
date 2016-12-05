@@ -12,7 +12,7 @@ namespace UnityStandardAssets.Utility
 
         private void LateUpdate()
         {
-            transform.position = target.position + offset;
+            transform.position = Vector3.Lerp( transform.position, target.position + offset, Time.deltaTime);
         }
     }
 }

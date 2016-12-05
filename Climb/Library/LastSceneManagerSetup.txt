@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Body Test/BodyTest.unity
+- path: Assets/Body Test/BodyTest_11.30.16.unity
   isLoaded: 1
   isActive: 1

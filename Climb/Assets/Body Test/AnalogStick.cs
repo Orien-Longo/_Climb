@@ -3,10 +3,14 @@ using System.Collections;
 
 public class AnalogStick : MonoBehaviour {
 
-    public Rigidbody rightHRB;
-    public Rigidbody leftHRB;
-    public Rigidbody rightFRB;
-    public Rigidbody leftFRB;
+    public Rigidbody R_HandTarget;
+    public Rigidbody L_HandTarget;
+    public Rigidbody R_FootTarget;
+    public Rigidbody L_FootTarget;
+    public GameObject R_Hand;
+    public GameObject L_Hand;
+    public GameObject R_Foot;
+    public GameObject L_Foot;
 
 
     public float force;
@@ -28,66 +32,66 @@ public class AnalogStick : MonoBehaviour {
 
         if (Input.GetButton("RightShoulderButton"))
         {
-            rightHRB.useGravity = false;
-            rightHRB.constraints = RigidbodyConstraints.FreezeAll;
+            R_HandTarget.useGravity = false;
+            R_HandTarget.constraints = RigidbodyConstraints.FreezeAll;
             
         }
         else
         {
-            rightHRB.useGravity = true;
-            rightHRB.constraints = RigidbodyConstraints.None;
-            rightHRB.constraints = RigidbodyConstraints.FreezeRotationY;
-            rightHRB.constraints = RigidbodyConstraints.FreezeRotationX;
-            rightHRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            rightHRB.AddForce(transform.position + (rightStick * force) / Time.smoothDeltaTime);
+            R_HandTarget.useGravity = true;
+            R_HandTarget.constraints = RigidbodyConstraints.None;
+            R_HandTarget.constraints = RigidbodyConstraints.FreezeRotationY;
+            R_HandTarget.constraints = RigidbodyConstraints.FreezeRotationX;
+            R_HandTarget.constraints = RigidbodyConstraints.FreezePositionZ;
+            R_HandTarget.AddForce(transform.position + (rightStick * force) / Time.smoothDeltaTime);
         }
 
         if (Input.GetButton("LeftShoulderButton"))
         {
-            leftHRB.useGravity = false;
-            leftHRB.constraints = RigidbodyConstraints.FreezeAll;
+            L_HandTarget.useGravity = false;
+            L_HandTarget.constraints = RigidbodyConstraints.FreezeAll;
 
         }
         else
         {
-            leftHRB.useGravity = true;
-            leftHRB.constraints = RigidbodyConstraints.None;
-            leftHRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            leftHRB.constraints = RigidbodyConstraints.FreezeRotationY;
-            leftHRB.constraints = RigidbodyConstraints.FreezeRotationX;
-            leftHRB.AddForce(transform.position + (leftStick * force) / Time.smoothDeltaTime);
+            L_HandTarget.useGravity = true;
+            L_HandTarget.constraints = RigidbodyConstraints.None;
+            L_HandTarget.constraints = RigidbodyConstraints.FreezePositionZ;
+            L_HandTarget.constraints = RigidbodyConstraints.FreezeRotationY;
+            L_HandTarget.constraints = RigidbodyConstraints.FreezeRotationX;
+            L_HandTarget.AddForce(transform.position + (leftStick * force) / Time.smoothDeltaTime);
         }
 
         if (Input.GetAxis("RightTrigger") >0.1f)
         {
-            rightFRB.useGravity = false;
-            rightFRB.constraints = RigidbodyConstraints.FreezeAll;
+            R_FootTarget.useGravity = false;
+            R_FootTarget.constraints = RigidbodyConstraints.FreezeAll;
 
         }
         else
         {
-            rightFRB.useGravity = true;
-            rightFRB.constraints = RigidbodyConstraints.None;
-            rightFRB.constraints = RigidbodyConstraints.FreezeRotationY;
-            rightFRB.constraints = RigidbodyConstraints.FreezeRotationX;
-            rightFRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            rightFRB.AddForce(transform.position + (rightStick * force) / Time.smoothDeltaTime);
+            R_FootTarget.useGravity = true;
+            R_FootTarget.constraints = RigidbodyConstraints.None;
+            R_FootTarget.constraints = RigidbodyConstraints.FreezeRotationY;
+            R_FootTarget.constraints = RigidbodyConstraints.FreezeRotationX;
+            R_FootTarget.constraints = RigidbodyConstraints.FreezePositionZ;
+            R_FootTarget.AddForce(transform.position + (rightStick * force) / Time.smoothDeltaTime);
         }
 
         if (Input.GetAxis("LeftTrigger") > 0.1f)
         {
-            leftFRB.useGravity = false;
-            leftFRB.constraints = RigidbodyConstraints.FreezeAll;
+            L_FootTarget.useGravity = false;
+            L_FootTarget.constraints = RigidbodyConstraints.FreezeAll;
 
         }
         else
         {
-            leftFRB.useGravity = true;
-            leftFRB.constraints = RigidbodyConstraints.None;
-            leftFRB.constraints = RigidbodyConstraints.FreezePositionZ;
-            leftFRB.constraints = RigidbodyConstraints.FreezeRotationY;
-            leftFRB.constraints = RigidbodyConstraints.FreezeRotationX;
-            leftFRB.AddForce(transform.position + (leftStick * force) / Time.smoothDeltaTime);
+            L_FootTarget.useGravity = true;
+            L_FootTarget.constraints = RigidbodyConstraints.None;
+            L_FootTarget.constraints = RigidbodyConstraints.FreezePositionZ;
+            L_FootTarget.constraints = RigidbodyConstraints.FreezeRotationY;
+            L_FootTarget.constraints = RigidbodyConstraints.FreezeRotationX;
+            L_FootTarget.AddForce(transform.position + (leftStick * force) / Time.smoothDeltaTime);
         }
     }
 }
