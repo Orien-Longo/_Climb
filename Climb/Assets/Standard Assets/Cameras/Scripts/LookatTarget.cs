@@ -19,14 +19,18 @@ namespace UnityStandardAssets.Cameras
 
         // to have no constraints on an axis, set the rotationRange greater than 360.
 
-        [SerializeField] private Vector2 m_RotationRange;
-        [SerializeField] private float m_FollowSpeed = 1;
+        [SerializeField]
+        private Vector2 m_RotationRange;
+        [SerializeField]
+        private float m_FollowSpeed = 1;
 
         private Vector3 m_FollowAngles;
         private Quaternion m_OriginalRotation;
 
         protected Vector3 m_FollowVelocity;
 
+        public Transform targ;
+        float dist;
 
         // Use this for initialization
         protected override void Start()
@@ -44,25 +48,33 @@ namespace UnityStandardAssets.Cameras
 
             // tackle rotation around Y first
             Vector3 localTarget = transform.InverseTransformPoint(m_Target.position);
-            float yAngle = Mathf.Atan2(localTarget.x, localTarget.z)*Mathf.Rad2Deg;
+            float yAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
-            yAngle = Mathf.Clamp(yAngle, -m_RotationRange.y*0.5f, m_RotationRange.y*0.5f);
-            transform.localRotation = m_OriginalRotation*Quaternion.Euler(0, yAngle + 180, 0);
+            yAngle = Mathf.Clamp(yAngle, -m_RotationRange.y * 0.5f, m_RotationRange.y * 0.5f);
+            transform.localRotation = m_OriginalRotation * Quaternion.Euler(0, yAngle + 180, 0);
 
             // then recalculate new local target position for rotation around X
             localTarget = transform.InverseTransformPoint(m_Target.position);
-            float xAngle = Mathf.Atan2(localTarget.y, localTarget.z+90)*Mathf.Rad2Deg;
-            xAngle = Mathf.Clamp(xAngle, -m_RotationRange.x*0.5f, m_RotationRange.x*0.5f);
+            float xAngle = Mathf.Atan2(localTarget.y, localTarget.z + 90) * Mathf.Rad2Deg;
+            xAngle = Mathf.Clamp(xAngle, -m_RotationRange.x * 0.5f, m_RotationRange.x * 0.5f);
             var targetAngles = new Vector3(m_FollowAngles.x + Mathf.DeltaAngle(m_FollowAngles.x, xAngle),
-                                           m_FollowAngles.y + Mathf.DeltaAngle(m_FollowAngles.y, yAngle+180));
+                                           m_FollowAngles.y + Mathf.DeltaAngle(m_FollowAngles.y, yAngle + 180));
 
             // smoothly interpolate the current angles to the target angles
             m_FollowAngles = Vector3.SmoothDamp(m_FollowAngles, targetAngles, ref m_FollowVelocity, m_FollowSpeed);
 
 
             // and update the gameobject itself
-            transform.localRotation = m_OriginalRotation*Quaternion.Euler(-m_FollowAngles.x, m_FollowAngles.y, m_FollowAngles.z);
-            
+            transform.localRotation = m_OriginalRotation * Quaternion.Euler(-m_FollowAngles.x, m_FollowAngles.y, m_FollowAngles.z);
+            if (targ)
+            {
+                dist = Vector3.Distance(targ.position, transform.position);
+                if (Mathf.Abs(dist) > .5f)
+                {
+                    transform.position = targ.position;
+                }
+
+            }
         }
     }
 }
