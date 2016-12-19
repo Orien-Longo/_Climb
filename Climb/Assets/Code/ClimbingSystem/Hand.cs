@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿// Written with help from Rafi Alam. :)
+
+using UnityEngine;
 using System.Collections;
 
-public class Hand : MonoBehaviour {
+public class Hand : MonoBehaviour
+{
 
     GameObject ends;
     float dist;
@@ -12,20 +15,28 @@ public class Hand : MonoBehaviour {
     public bool rHand;
     static public Vector3 rPos;
     static public Vector3 lPos;
+    public float deadzone = .01f;
+    public Vector3 deadzoneVector;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    //right analog sticks that will add to the tranform position
+    Vector3 rightStick;
+    Vector3 leftStick;
+
+    void Update()
+    {
         Snap();
+        DeadOffset();
+        lPos = Vector3.Lerp(lPos, transform.position + leftStick, Time.deltaTime);
+        rPos = Vector3.Lerp(rPos, transform.position + rightStick, Time.deltaTime);
     }
 
     void Snap()
     {
         ends = ClosestHold();
+
+        rightStick = new Vector3(Input.GetAxisRaw("HRStick"), Input.GetAxisRaw("VRStick"), 0);
+        leftStick = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
 
         if (ends != null)
         {
@@ -37,20 +48,20 @@ public class Hand : MonoBehaviour {
                 transform.position = ends.transform.position;
                 transform.rotation = ends.transform.rotation;
             }
-            else {
+            else
+            {
                 if (rHand)
                 {
-                    rPos = Vector3.zero;
+                    if (rightStick != Vector3.zero)
+                        rPos = Vector3.zero;
                 }
-                else {
+                else
+                {
                     lPos = Vector3.zero;
                 }
-
                 snapped = false;
             }
         }
-
-        
     }
 
     GameObject ClosestHold()
@@ -69,20 +80,50 @@ public class Hand : MonoBehaviour {
             {
                 if (rHand && lPos != search.transform.position)
                 {
-                    rPos = search.transform.position;
+                    if (Input.GetButton("RightShoulderButton"))
+                    {
+                        rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
 
-                    closest = search;
-                    distance = currentDist;
+                        closest = search;
+                        distance = currentDist;
+                    }
                 }
+
                 if (!rHand && rPos != search.transform.position)
                 {
-                    lPos = search.transform.position;
+                    if (Input.GetButton("LeftSHoulderButton"))
+                    {
+                        lPos = Vector3.Lerp(lPos, search.transform.position, Time.deltaTime);
 
-                    closest = search;
-                    distance = currentDist;
+                        closest = search;
+                        distance = currentDist;
+                    }
+                    
                 }
+                
             }
         }
         return closest;
+    }
+
+    void DeadOffset()
+    {
+        if (rightStick.x > 0)
+        {
+            deadzoneVector.x -= deadzone;
+        }
+        else
+        {
+            deadzoneVector.x += deadzone;
+        }
+        if (rightStick.y > 0)
+        {
+            deadzoneVector.y -= deadzone;
+        }
+        else
+        {
+            deadzoneVector.y += deadzone;
+        }
+
     }
 }

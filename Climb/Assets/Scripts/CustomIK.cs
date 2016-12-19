@@ -14,7 +14,7 @@ public class CustomIK : MonoBehaviour
     public Transform elbowTarget;
 
     public bool IsEnabled;
-    public float Weight = 1;
+    public float Weight;
 
     //Internal variables
     Quaternion upperArmStartRotation;
@@ -34,6 +34,7 @@ public class CustomIK : MonoBehaviour
 
     void Start()
     {
+
         upperArmStartRotation = upperArm.rotation;
         forearmStartRotation = forearm.rotation;
         handStartRotation = hand.rotation;
