@@ -4,7 +4,7 @@ using System.Collections;
 public class Agent : MonoBehaviour {
 
 	public GameObject			particle;
-	protected NavMeshAgent		agent;
+	protected UnityEngine.AI.NavMeshAgent		agent;
 	protected Animator			animator;
 
 	protected Locomotion locomotion;
@@ -13,7 +13,7 @@ public class Agent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		agent = GetComponent<NavMeshAgent>();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		agent.updateRotation = false;
 
 		animator = GetComponent<Animator>();
