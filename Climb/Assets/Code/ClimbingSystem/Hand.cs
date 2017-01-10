@@ -18,6 +18,9 @@ public class Hand : MonoBehaviour
     public float deadzone = .01f;
     public Vector3 deadzoneVector;
 
+    public GameObject skeletonHandR;
+    public GameObject skeletonHandL;
+
 
     //right analog sticks that will add to the tranform position
     Vector3 rightStick;
@@ -53,7 +56,7 @@ public class Hand : MonoBehaviour
                 if (rHand)
                 {
                     if (rightStick != Vector3.zero)
-                        rPos = Vector3.zero;
+                        rPos = Vector3.zero + rightStick;
                 }
                 else
                 {
@@ -78,9 +81,9 @@ public class Hand : MonoBehaviour
 
             if (currentDist < distance)
             {
-                if (rHand && lPos != search.transform.position)
+                if (rHand)
                 {
-                    if (Input.GetButton("RightShoulderButton"))
+                    if (lPos != search.transform.position && Input.GetButton("RightShoulderButton"))
                     {
                         rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
 
@@ -89,9 +92,9 @@ public class Hand : MonoBehaviour
                     }
                 }
 
-                if (!rHand && rPos != search.transform.position)
+                else 
                 {
-                    if (Input.GetButton("LeftSHoulderButton"))
+                    if (!rHand && rPos != search.transform.position && Input.GetButton("LeftShoulderButton"))
                     {
                         lPos = Vector3.Lerp(lPos, search.transform.position, Time.deltaTime);
 
