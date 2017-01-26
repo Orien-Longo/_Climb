@@ -160,7 +160,7 @@ public class IK : MonoBehaviour {
 				
 				if(leftHandObj != null)
 				{
-					leftHandObj.position = avatar.GetIKPosition(AvatarIKGoal.LeftHand);
+					leftHandObj.position = Vector3.Lerp(leftFootObj.position, avatar.GetIKPosition(AvatarIKGoal.LeftHand), Time.deltaTime / 10f);
 					leftHandObj.rotation  = avatar.GetIKRotation(AvatarIKGoal.LeftHand);
 				}				
 				

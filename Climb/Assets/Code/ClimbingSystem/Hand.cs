@@ -12,7 +12,7 @@ public class Hand : MonoBehaviour
     bool snapped;
     public float snapDist;
 
-    public bool rHand;
+    private bool rHand;
     static public Vector3 rPos;
     static public Vector3 lPos;
     public float deadzone = .01f;
@@ -29,7 +29,8 @@ public class Hand : MonoBehaviour
     void Update()
     {
         Snap();
-        DeadOffset();
+        //DeadOffset();
+        
         lPos = Vector3.Lerp(lPos, transform.position + leftStick, Time.deltaTime);
         rPos = Vector3.Lerp(rPos, transform.position + rightStick, Time.deltaTime);
     }
@@ -55,12 +56,13 @@ public class Hand : MonoBehaviour
             {
                 if (rHand)
                 {
-                    if (rightStick != Vector3.zero)
+                    if (rPos != Vector3.zero)
                         rPos = Vector3.zero + rightStick;
                 }
                 else
                 {
-                    lPos = Vector3.zero;
+                    if (lPos != Vector3.zero)
+                        lPos = Vector3.zero + rightStick;
                 }
                 snapped = false;
             }
@@ -73,7 +75,7 @@ public class Hand : MonoBehaviour
 
         //assign to look for the closest
         GameObject closest = null;
-        float distance = 100;
+        float distance = 150;
         foreach (GameObject search in hold)
         {
             Vector3 dif = search.transform.position - transform.position;
@@ -81,9 +83,11 @@ public class Hand : MonoBehaviour
 
             if (currentDist < distance)
             {
-                if (rHand)
+                //if (rHand)
+                //{
+                if (rHand && lPos != search.transform.position)
                 {
-                    if (lPos != search.transform.position && Input.GetButton("RightShoulderButton"))
+                    if (Input.GetButton("RightShoulderButton"))
                     {
                         rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
 
@@ -91,42 +95,46 @@ public class Hand : MonoBehaviour
                         distance = currentDist;
                     }
                 }
+                //}
 
-                else 
+                //else 
+                //{
+                if (!rHand && rPos != search.transform.position)
                 {
-                    if (!rHand && rPos != search.transform.position && Input.GetButton("LeftShoulderButton"))
+                    if (Input.GetButton("LeftShoulderButton"))
                     {
                         lPos = Vector3.Lerp(lPos, search.transform.position, Time.deltaTime);
 
                         closest = search;
                         distance = currentDist;
                     }
-                    
                 }
-                
+
+                //}
+
             }
         }
         return closest;
     }
 
-    void DeadOffset()
-    {
-        if (rightStick.x > 0)
-        {
-            deadzoneVector.x -= deadzone;
-        }
-        else
-        {
-            deadzoneVector.x += deadzone;
-        }
-        if (rightStick.y > 0)
-        {
-            deadzoneVector.y -= deadzone;
-        }
-        else
-        {
-            deadzoneVector.y += deadzone;
-        }
+    //void DeadOffset()
+    //{
+    //    if (rightStick.x > 0)
+    //    {
+    //        deadzoneVector.x -= deadzone;
+    //    }
+    //    else
+    //    {
+    //        deadzoneVector.x += deadzone;
+    //    }
+    //    if (rightStick.y > 0)
+    //    {
+    //        deadzoneVector.y -= deadzone;
+    //    }
+    //    else
+    //    {
+    //        deadzoneVector.y += deadzone;
+    //    }
 
-    }
+    //}
 }
