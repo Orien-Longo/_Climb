@@ -16,8 +16,7 @@ public class LimbMovement : MonoBehaviour
     public float snapDist;
 
     //private bool rHand;
-    static public Vector3 rPos;
-    static public Vector3 lPos;
+    static public Vector3 rPos, lastRPos, lPos, lastLPos;
 
     //right analog sticks that will add to the tranform position
     Vector3 rightStick;
@@ -28,22 +27,33 @@ public class LimbMovement : MonoBehaviour
         rightStick = new Vector3(Input.GetAxisRaw("HRStick"), Input.GetAxisRaw("VRStick"), 0);
         leftStick = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
         CheckSticks();
+
+        Debug.Log(rightStickIsMoving);
+        
         Snap();
 
     }
 
     void CheckSticks()
     {
-        if(rightStick.x > .01f || rightStick.x < -.01f || rightStick.y >.01f || rightStick.y < -.01f)
+        if (rightStick.x > .01f || rightStick.x < -.01f || rightStick.y > .01f || rightStick.y < -.01f)
         {
             rightStickIsMoving = true;
+            
 
         }
         else
         {
             rightStickIsMoving = false;
         }
-        if(leftStick.x > .01f || leftStick.x < -.01f || leftStick.y > .01f || leftStick.y < -.01f)
+        if (rightStickIsMoving)
+        {
+            lastRPos = RightHand.transform.position;
+            RightHand.transform.position =  RightStartWithStick.position + rightStick;
+        }
+        else { RightHand.transform.position = Vector3.Lerp(RightHand.transform.position, lastRPos, Time.deltaTime); }
+
+        if (leftStick.x > .01f || leftStick.x < -.01f || leftStick.y > .01f || leftStick.y < -.01f)
         {
             leftStickIsMoving = true;
         }
@@ -73,7 +83,7 @@ public class LimbMovement : MonoBehaviour
             {
 
                 if (rPos != Vector3.zero) { rPos = Vector3.zero; }
-                    
+
                 rHSnapped = false;
             }
         }
@@ -97,13 +107,13 @@ public class LimbMovement : MonoBehaviour
                 ////{
                 //if (lPos != search.transform.position)
                 //{
-                    if (Input.GetButton("RightShoulderButton"))
-                    {
-                        rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
+                if (Input.GetButton("RightShoulderButton"))
+                {
+                    rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
 
-                        closest = search;
-                        distance = currentDist;
-                    }
+                    closest = search;
+                    distance = currentDist;
+                }
                 //}
 
             }

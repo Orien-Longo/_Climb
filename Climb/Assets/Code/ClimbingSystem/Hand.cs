@@ -15,7 +15,7 @@ public class Hand : MonoBehaviour
     private bool rHand;
     static public Vector3 rPos;
     static public Vector3 lPos;
-    public float deadzone = .01f;
+    //public float deadzone = .01f;
     public Vector3 deadzoneVector;
 
     public GameObject skeletonHandR;
@@ -31,8 +31,8 @@ public class Hand : MonoBehaviour
         Snap();
         //DeadOffset();
         
-        lPos = Vector3.Lerp(lPos, transform.position + leftStick, Time.deltaTime);
-        rPos = Vector3.Lerp(rPos, transform.position + rightStick, Time.deltaTime);
+        //lPos = Vector3.Lerp(lPos, transform.position + leftStick, Time.deltaTime);
+        //rPos = Vector3.Lerp(rPos, transform.position + rightStick, Time.deltaTime);
     }
 
     void Snap()
@@ -57,12 +57,12 @@ public class Hand : MonoBehaviour
                 if (rHand)
                 {
                     if (rPos != Vector3.zero)
-                        rPos = Vector3.zero + rightStick;
+                        rPos = Vector3.zero;
                 }
                 else
                 {
                     if (lPos != Vector3.zero)
-                        lPos = Vector3.zero + rightStick;
+                        lPos = Vector3.zero;
                 }
                 snapped = false;
             }
@@ -87,13 +87,12 @@ public class Hand : MonoBehaviour
                 //{
                 if (rHand && lPos != search.transform.position)
                 {
-                    if (Input.GetButton("RightShoulderButton"))
-                    {
-                        rPos = Vector3.Lerp(rPos, search.transform.position, Time.deltaTime);
+                    
+                        rPos = search.transform.position;
 
                         closest = search;
                         distance = currentDist;
-                    }
+                    
                 }
                 //}
 
@@ -101,13 +100,12 @@ public class Hand : MonoBehaviour
                 //{
                 if (!rHand && rPos != search.transform.position)
                 {
-                    if (Input.GetButton("LeftShoulderButton"))
-                    {
-                        lPos = Vector3.Lerp(lPos, search.transform.position, Time.deltaTime);
+                    
+                        lPos = search.transform.position;
 
                         closest = search;
                         distance = currentDist;
-                    }
+                    
                 }
 
                 //}
