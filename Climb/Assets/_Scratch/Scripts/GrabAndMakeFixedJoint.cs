@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrabAndMakeFixedJoint : MonoBehaviour {
 
-    bool handGrab;
+	bool LHandGrab, RHandGrab, LFootGrab, RFootGrab;
     public GameObject[] knuckleJoint;
 
 	// Use this for initialization
@@ -14,13 +14,13 @@ public class GrabAndMakeFixedJoint : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (handGrab)
+		if (LHandGrab)
         {
-            Grab();
+            LHGrab();
         }
 	}
 
-    void Grab()
+    void LHGrab()
     {
         //knuckleJoint[] knuckleJoints = 
         //foreach()
