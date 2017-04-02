@@ -5,7 +5,7 @@ public class ClimbingCharacter : MonoBehaviour {
 
     Vector3 move;
 
-    public bool climb;
+    public static bool climb;
 
 	// Use this for initialization
 	void Start () {
@@ -17,11 +17,11 @@ public class ClimbingCharacter : MonoBehaviour {
 
         if (climb)
         {
-            //GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().isKinematic = true;
         }
         else
         {
-            //GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().isKinematic = false;
         }
       
         move = transform.position;

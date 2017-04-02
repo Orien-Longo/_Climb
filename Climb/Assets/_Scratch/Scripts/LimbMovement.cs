@@ -7,7 +7,7 @@ public class LimbMovement : MonoBehaviour
 
     public GameObject LeftHand, RightHand, LeftFoot, RightFoot;
     public Transform LeftStartWithStick, RightStartWithStick;
-    bool leftStickIsMoving, rightStickIsMoving, rHandIsGrabbing, lHandIsGrabbing;
+    public static bool leftStickIsMoving, rightStickIsMoving, rHandIsGrabbing, lHandIsGrabbing;
 
     GameObject[] ends;
     float dist;
