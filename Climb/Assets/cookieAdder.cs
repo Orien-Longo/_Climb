@@ -2,28 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cookieAdder : MonoBehaviour {
+public class cookieAdder : MonoBehaviour
+{
     //public Texture SunCookie;
     float cookie, cookieRate;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
 
-        gameObject.GetComponent<Light>().cookieSize = 10;
-        cookieRate = .05f;
-	}
+        cookie = 107.7f;
+
+        cookieRate = .5f;
+    }
 
     // Update is called once per frame
-    void Update() {
-        if (cookie < 70f)
+    void Update()
+    {
+        gameObject.GetComponent<Light>().cookieSize = cookie;
+        if (cookie < 402.6f)
         {
-            gameObject.GetComponent<Light>().cookieSize += cookieRate;
+
+
+            cookie += cookieRate;
+
+
 
             //Debug.Log(gameObject.GetComponent<Light>().cookieSize);
         }
-        if (cookie > 70f)
+        else
         {
-            gameObject.GetComponent<Light>().cookieSize = 0;
+            cookie = 107.7f;
         }
-	}
+        Debug.Log(gameObject.GetComponent<Light>().cookieSize);
+    }
 }
