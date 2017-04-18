@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Pretty Weird with camera effects 5.6.unity
+- path: Assets/_OrganizedSceneAssets/Scenes/TowerLVL01.unity
   isLoaded: 1
   isActive: 1
